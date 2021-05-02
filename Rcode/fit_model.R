@@ -59,9 +59,9 @@ load("df_m.Rdata")
 DNN <- Fit_DNN(cnt=setting$country,age = 0:100,ys = setting$ys,yf = setting$yf,yv=setting$yv,
                  ep=setting$ep,un=setting$un)
 
-matr.NN<- DNN[[1]]
-matr.val_predi<- DNN[[2]]
-matr.val<- DNN[[3]]
+matr.NN<- DNN[[1]] # Smoothed NN
+matr.val_predi<- DNN[[2]] # No Smooth NN
+matr.val<- DNN[[3]] # Obs.
 
 mae(matr.NN,matr.val)
 mae(matr.val_predi,matr.val)
