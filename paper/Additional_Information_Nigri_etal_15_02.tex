@@ -1,0 +1,208 @@
+\documentclass[a4,11pt]{article}
+\usepackage[a4paper,left=2.54cm,right=2.54cm,bottom=3cm,top=3cm,text={18cm,20cm},footskip=32pt]{geometry}
+\usepackage{latexsym} 
+\usepackage{amsmath}  
+\usepackage{amsthm}	% per la stilizzazione dei teoremi e per gestire extra simboli matematici, size, space, font, etc..
+\usepackage{amsopn}	% per stilizzazione di alcuni operatori matematici (e.g. lim e log)
+\usepackage{amscd}	% per gestire frecce e circolarità tramite frecce su più livelli in un'equazione (tipo grafi)
+\usepackage{amssymb} % per i simboli matematici
+\usepackage{array}	% per creare e gestire array
+\usepackage{actuarialsymbol} % per simboli attuariali e di matematica finanziaria 
+\usepackage{mathtools} 
+\usepackage{makeidx} 
+\usepackage{multicol} 
+\usepackage{multirow} 
+\usepackage{caption} 
+\usepackage{float} 
+\usepackage{enumerate} 
+\usepackage{graphicx}   
+\usepackage{subfig} 
+\usepackage{booktabs} 
+\usepackage{color}  
+\usepackage[english]{babel} 
+\usepackage{wasysym}
+\usepackage{appendix} % per inserire appendice
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{collref}
+\usepackage{microtype}  \graphicspath{ {Figures/}} 
+\usepackage{lmodern}
+\usepackage{soul}
+\usepackage{bm}
+\usepackage{bookmark}
+\usepackage[authoryear]{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\title{\textbf{Supplementary Material:}\\
+
+ Leveraging deep neural networks to estimate age specific mortality from life expectancy at birth}
+\author{}
+%\author{Andrea Nigri, Susanna Levantesi, Jos\'e Manuel Aburto}
+\date{\today}
+
+\begin{document}
+	\maketitle
+
+
+\section{Smoothed Vs. No-Smoother}
+
+\begin{table}[H]
+		\centering
+		\caption{Out-of-sample test: MAE and RMSE for DNN(Smoothed) and DNN estimation by country. Forecasting periods: 1981-1995 (columns 3-4), 1991-2005 (columns 5-6), and 2001-2015 (columns 7-8). Females.}
+		\label{tab:1}
+			\footnotesize	
+		\begin{tabular}{cl|cc|cc|cc}
+			\hline 		
+			\multirow{2}{*}{\textbf{Country}} & \multirow{2}{*}{\textbf{Model}} & \multicolumn{2}{c|}{\textbf{1981-1995}} & \multicolumn{2}{c}{\textbf{1991-2005}} & \multicolumn{2}{c}{\textbf{2001-2015}}\tabularnewline
+			\cline{3-8} 
+			&  &  MAE & RMSE & MAE & RMSE &  MAE & RMSE\tabularnewline
+			\hline 
+\multirow{2}{*}{\textbf{\textit{Italy}}} & \multirow{1}{*}{DNN(Smoothed)}  &  0.1672& 0.2017    &    0.1038& 0.1418 &    0.1210& 0.1591 \tabularnewline
+			                                 & \multirow{1}{*}{DNN}                   &   0.1692& 0.2040   &   0.1054 & 0.1438&      0.1234& 0.1614 \tabularnewline
+                        \hline 
+\multirow{2}{*}{\textbf{\textit{Japan}}} & \multirow{1}{*}{DNN(Smoothed)}  &0.1730& 0.2055    &     0.1182& 0.1532  &   0.1137&0.1436\tabularnewline
+				                           & \multirow{1}{*}{DNN}                    & 0.1736 & 0.2070   &   0.1206 & 0.1560     &   0.1140&0.1444\tabularnewline
+                     \hline 
+\multirow{2}{*}{\textbf{\textit{USA}}} &\multirow{1}{*}{DNN(Smoothed)}  &0.0572&0.0788     &0.0873& 0.1119       &   0.0944& 0.1206 \tabularnewline
+					                 &\multirow{1}{*}{DNN}                   & 0.05955 & 0.08066   & 0.08786 & 0.1135       &   0.09538& 0.1218 \tabularnewline
+                     \hline 
+\multirow{2}{*}{\textbf{\textit{Russia (2014)}}} &\multirow{1}{*}{DNN(Smoothed)}  &-&-&     0.1714&0.2544 &     0.1670& 0.2393 \tabularnewline
+				                                       &\multirow{1}{*}{DNN}                   &-&-&    0.1764& 0.2573    &0.1682& 0.2402 \tabularnewline
+  	   		\hline 
+		\end{tabular}
+	\end{table}
+%
+
+
+\begin{table}[H]
+		\centering
+		\caption{Out-of-sample test: MAE and RMSE for DNN(Smoothed) and DNN estimation by country. Forecasting periods: 1981-1995 (columns 3-4), 1991-2005 (columns 5-6), and 2001-2015 (columns 7-8). Males.}
+		\label{tab:2}
+			\footnotesize	
+		\begin{tabular}{cl|cc|cc|cc}
+			\hline 		
+\multirow{2}{*}{\textbf{Country}} & \multirow{2}{*}{\textbf{Model}} & \multicolumn{2}{c|}{\textbf{1981-1995}} & \multicolumn{2}{c}{\textbf{1991-2005}} & \multicolumn{2}{c}{\textbf{2001-2015}}\tabularnewline
+			\cline{3-8} 
+			&  &  MAE & RMSE & MAE & RMSE &  MAE & RMSE\tabularnewline
+			\hline 
+\multirow{2}{*}{\textbf{\textit{Italy}}} & \multirow{1}{*}{DNN(Smoothed)}  &0.1419& 0.220    &   0.1107&0.1493    &   0.1194&0.1566 \tabularnewline
+							 & \multirow{1}{*}{DNN}                   &0.1430& 0.2214  &   0.1124&0.1506    &    0.1212&0.1580 \tabularnewline
+                        \hline 
+\multirow{2}{*}{\textbf{\textit{Japan}}} & \multirow{1}{*}{DNN(Smoothed)} & 0.1049 &0.1241  &   0.0943&0.1264    &   0.09952& 0.1266 \tabularnewline
+			                                    & \multirow{1}{*}{DNN}                 & 0.1053 &0.1249   &  0.09575&0.1281    &  0.0986& 0.1254 \tabularnewline
+			\hline
+ \multirow{2}{*}{\textbf{\textit{USA}}} &\multirow{1}{*}{DNN(Smoothed)}  &    0.0746 &0.1088 &    0.0730&0.0907      & 0.0955& 0.1127\tabularnewline
+							 &\multirow{1}{*}{DNN}                    &    0.0765 & 0.111 &   0.07902&0.10001      & 0.09724&0.1147\tabularnewline
+			\hline 
+ \multirow{2}{*}{\textbf{\textit{Russia (2014)}}} &\multirow{1}{*}{DNN(Smoothed)}  &-&-&0.1989&0.2366&       0.1497& 0.2412\tabularnewline
+									 &\multirow{1}{*}{DNN}                  &-&-& 0.2000 & 0.2379 &   0.1505& 0.2420\tabularnewline
+	\hline 
+
+		\end{tabular}
+	\end{table}
+
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{no_smooth_1970}\\
+	 \caption{$\Delta_{a,t}$ - No smoothed estimations. Validation period: 2001-2015.}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{no_smooth_1960}\\
+	 \caption{$\Delta_{a,t}$ - No smoothed estimations. Validation period: 1991-1995.}
+	 
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{no_smooth_1950}\\
+	 \caption{$\Delta_{a,t}$ - No smoothed estimations. Validation period: 1981-1995.}
+\end{figure}
+
+
+
+
+\section{Age profile}
+\subsection{1960}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_M_1970}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1970-2000. Males} 
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_F_1970}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1970-2000. Females} 
+\end{figure}
+
+
+\subsection{1960}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_M_1960}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1960-1990. Males} 
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_F_1960}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1960-1990. Females} 
+\end{figure}
+
+\subsection{1950}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_M_1950}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1950-1980. Males} 
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{NO_S_age_pattern_F_1950}\\
+	\caption{$log(m_{a,t})$ - No smoothed estimations. Training period: 1950-1980. Females} 
+\end{figure}
+
+
+\section{Hyperparametes}
+
+%Technical info about packages for DNN implementation
+ 
+%\begin{itemize}
+%	\item R version 4.0.1 (2020-06-06). Platform: x86_64-w64-mingw32-x64 (64-bit) Running under: Windows 10 x64 (build 18363)  Intel(R) Core(TM) i7 - 8550U CPU @ 1.80GHz 1.99GHz - RAM 16 GB
+
+%	\item	 Keras version (R interface): 2.3.0.0
+%	\item Tensorflow version (R interface): 2.2.0
+%	\item Tensorflow version (Python module for backend tensor operations): 1.10.1 (Python module), Python version : 3.6
+%\end{itemize}
+
+
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{}     & \multicolumn{2}{c|}{1981-1995} & \multicolumn{2}{c|}{1992-2005} & \multicolumn{2}{c|}{2001-2015} \\ \hline
+COUNTRY       & UNIT          & EPOCHS         & UNIT          & EPOCHS         & UNIT          & EPOCHS         \\ \hline
+Italy Male    & 150           & 800            & 150           & 800            & 200           & 800            \\ \hline
+Japan Male    & 350           & 800            & 150           & 800            & 600           & 350            \\ \hline
+USA Male      & 150           & 800            & 250           & 800            & 105           & 300            \\ \hline
+Russia Male   & -             & -              & 210           & 800            & 210           & 800            \\ \hline
+Italy Female  & 250           & 800            & 150           & 400            & 600           & 350            \\ \hline
+Japan Female  & 200           & 800            & 100           & 450            & 200           & 800            \\ \hline
+USA Female    & 150           & 800            & 80            & 800            & 700           & 600            \\ \hline
+Russia Female & -             & -              & 190           & 800            & 200           & 800            \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
+	 
+
